@@ -18,7 +18,8 @@ dependencies = ["numpy", "pandas"]
 standard = [
     "Pillow", "numpy", "torch", "scipy"
 ]
-cuda = ["cvcandy[standard]", "cupy-cuda12x"]
+cuda12x = ["cvcandy[standard]", "cupy-cuda12x"]
+cuda11x = ["cvcandy[standard]", "cupy-cuda11x"]
 
 [tool.hatch.build.targets.sdist]
 only-include = ["cvcandy"]
