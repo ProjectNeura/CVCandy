@@ -3,5 +3,5 @@
 ## Installation
 
 ```shell
-pip install git+https://github.com/ProjectNeura/CVCandy[cuda12x]
+pip install git+https://github.com/ProjectNeura/CVCandy
 ```
