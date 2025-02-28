@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cvcandy"
+version = "1.0.0-alpha.0"
+description = "Computer Vision Candy"
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Project Neura", email = "central@projectneura.org" }
+]
+dependencies = ["numpy", "pandas"]
+
+[project.optional-dependencies]
+standard = [
+    "Pillow", "numpy", "torch", "scipy"
+]
+
+[tool.hatch.build.targets.sdist]
+only-include = ["cvcandy"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["cvcandy"]
+
+[project.urls]
+Documentation = "https://cvcandy-docs.projectneura.org"
+Repository = "https://github.com/ProjectNeura/CVCandy"
