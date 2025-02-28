@@ -1,10 +1,16 @@
 from typing import override as _override
 
-from scipy.ndimage import distance_transform_edt as _distance_transform_edt
-from torch import Tensor as _Tensor, bool as _bool, float32 as _float32, ones as _ones
+from torch import Tensor as _Tensor, bool as _bool, float32 as _float32, ones as _ones, to_dlpack as _to_dlpack
 from torch.nn.functional import conv2d as _conv2d
 
 from cvcandy.universal import Metric as _Metric
+
+try:
+    from cupy import from_dlpack as _dlpack2np
+    from cupyx.scipy.ndimage import distance_transform_edt as _distance_transform_edt
+except ImportError:
+    from numpy import from_dlpack as _dlpack2np
+    from scipy.ndimage import distance_transform_edt as _distance_transform_edt
 
 
 class DiceSimilarityCoefficient(_Metric):
@@ -26,8 +32,8 @@ class NormalizedSurfaceDistance(_Metric):
         label_neighbors = _conv2d(label.unsqueeze(0).unsqueeze(0).float(), kernel, padding=1)
         mask_boundary = mask & (mask_neighbors.squeeze() < 9)
         label_boundary = label & (label_neighbors.squeeze() < 9)
-        mask_boundary_np = mask_boundary.cpu().numpy().astype(bool)
-        label_boundary_np = label_boundary.cpu().numpy().astype(bool)
+        mask_boundary_np = _dlpack2np(_to_dlpack(mask_boundary)).astype(bool)
+        label_boundary_np = _dlpack2np(_to_dlpack(label_boundary)).astype(bool)
         dist_to_mask = _distance_transform_edt(~mask_boundary_np)
         dist_to_label = _distance_transform_edt(~label_boundary_np)
         mask_to_label_dist = dist_to_label[label_boundary_np]
