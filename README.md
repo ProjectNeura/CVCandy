@@ -1,1 +1,1 @@
-# CVCandy: A
+# CVCandy
