@@ -38,6 +38,6 @@ class NormalizedSurfaceDistance(_Metric):
         dist_to_label = _distance_transform_edt(~label_boundary_np)
         mask_to_label_dist = dist_to_label[label_boundary_np]
         label_to_mask_dist = dist_to_mask[mask_boundary_np]
-        d1 = 0 if mask_to_label_dist.size < 0 else mask_to_label_dist.mean()
-        d2 = 0 if label_to_mask_dist.size < 0 else label_to_mask_dist.mean()
+        d1 = 0 if mask_to_label_dist.size < 1 else mask_to_label_dist.mean()
+        d2 = 0 if label_to_mask_dist.size < 1 else label_to_mask_dist.mean()
         return .5 * float(d1 + d2)
